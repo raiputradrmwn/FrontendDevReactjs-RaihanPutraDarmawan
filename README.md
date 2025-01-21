@@ -8,11 +8,10 @@ Welcome to **Restaurant Finder**, a simple web application built with **React.js
 - 📍 **View Restaurant Details**
 - 🔄 **Load More Functionality**
 - 🎨 **Responsive UI using Tailwind CSS**
-- 🔙 **Back Button for Easy Navigation**
 
 ## 🛠️ Technologies Used
 - **React.js** (Version 18.3.1)
-- **React Router Dom** (Version 18.3.1)
+- **Node JS** (Version 20.17.0)
 - **Tailwind CSS** (for styling)
 - **Vite** (for fast development)
 - **REST API** (from Dicoding)
