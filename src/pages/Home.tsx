@@ -19,7 +19,9 @@ const Home: React.FC = () => {
       setFilteredRestaurants(data.slice(0, visibleCount));
     });
   }, []);
-
+  useEffect(() => {
+    setFilteredRestaurants(restaurants.slice(0, visibleCount));
+  }, [visibleCount, restaurants]);
   const handleFilter = async (restaurantsName: string, rating: number) => {
     setFilters({ restaurantsName, rating });
   
@@ -43,6 +45,9 @@ const Home: React.FC = () => {
     if (rating > 0) {
       filtered = filtered.filter((restaurant) => restaurant.rating >= rating);
     }
+  
+    // Urutkan berdasarkan rating tertinggi ke terendah
+    filtered.sort((a, b) => b.rating - a.rating);
   
     setFilteredRestaurants(filtered);
   };

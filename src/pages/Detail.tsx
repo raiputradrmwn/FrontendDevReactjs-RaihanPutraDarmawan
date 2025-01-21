@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import { fetchRestaurantDetails } from "../services/api";
 import { Restaurant } from "../types";
 
 const Detail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate(); // Tambahkan navigasi
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
 
   useEffect(() => {
@@ -16,7 +17,15 @@ const Detail: React.FC = () => {
 
   return (
     <div className="container mx-auto px-6 py-10">
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-6 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+      >
+        ← Back
+      </button>
+
       <h1 className="text-4xl font-bold text-gray-900 mb-4">{restaurant.name}</h1>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <img
