@@ -12,7 +12,7 @@ const FilterBar: React.FC<FilterProps> = ({ onFilter }) => {
   });
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-gray-100 p-4 rounded-lg shadow-md">
+    <div className="flex flex-col sm:flex-row items-center justify-between mt-2 gap-4 bg-gray-100 p-4 rounded-lg shadow-md">
       <div className="flex gap-4">
         <div className="relative w-full sm:w-auto">
           <input
