@@ -25,10 +25,8 @@ Welcome to **Restaurant Finder**, a simple web application built with **React.js
 
 ### 1️⃣ **Clone Repository**
 ```sh
-git clone https://github.com/your-username/FrontendDevReactjs-NamaAnda.git
-cd FrontendDevReactjs-RaihanPutra Darmawan
+git clone https://github.com/your-username/FrontendDevReactjs-RaihanPutraDarmawan.git
+cd FrontendDevReactjs-RaihanPutraDarmawan
 npm install
 npm run dev
 ```
-
-dsadsa
