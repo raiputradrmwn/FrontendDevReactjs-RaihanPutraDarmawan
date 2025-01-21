@@ -9,5 +9,23 @@ export const fetchRestaurants = async () => {
 export const fetchRestaurantDetails = async (id: string) => {
   const response = await fetch(`${API_URL}/detail/${id}`);
   const data = await response.json();
-  return data.restaurant; 
+  return data.restaurant;
+};
+
+export const fetchRestaurantsByName = async (restaurantsName: string) => {
+  try {
+    const response = await fetch(
+      `${API_URL}/search?q=${encodeURIComponent(restaurantsName)}`
+    );
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.statusText}`);
+    }
+    const data = await response.json();
+
+    // API mengembalikan restoran yang cocok dengan query (nama, kategori, menu)
+    return data.restaurants || [];
+  } catch (error) {
+    console.error("Error fetching name data:", error);
+    return [];
+  }
 };

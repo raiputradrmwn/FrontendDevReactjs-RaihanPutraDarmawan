@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchRestaurants } from "../services/api";
+import { fetchRestaurants, fetchRestaurantsByName } from "../services/api";
 import RestaurantItem from "../components/RestaurantItem";
 import FilterBar from "../components/FilterBar";
 import { Restaurant } from "../types";
@@ -7,10 +7,10 @@ import { Restaurant } from "../types";
 const Home: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(8); 
   const [filters, setFilters] = useState({
-    location: "", 
-    rating: 0, 
+    restaurantsName: "",
+    rating: 0,
   });
 
   useEffect(() => {
@@ -20,38 +20,52 @@ const Home: React.FC = () => {
     });
   }, []);
 
-  useEffect(() => {
-    setFilteredRestaurants(restaurants.slice(0, visibleCount));
-  }, [visibleCount, restaurants]);
-
-  const handleFilter = (location: string, rating: number) => {
-    setFilters({ location, rating });
-    let filtered = restaurants;
-    if (location) {
-      filtered = filtered.filter((restaurant) =>
-        restaurant.city.toLowerCase().includes(location.toLowerCase())
-      );
+  const handleFilter = async (restaurantsName: string, rating: number) => {
+    setFilters({ restaurantsName, rating });
+  
+    let filtered: Restaurant[] = [];
+  
+    if (restaurantsName) {
+      try {
+        filtered = await fetchRestaurantsByName(restaurantsName);
+        if (filtered.length === 0) {
+          console.warn(`No restaurants found for Name: ${restaurantsName}`);
+        }
+      } catch (error) {
+        console.error("Error fetching data from server:", error);
+        filtered = [];
+      }
+    } else {
+      filtered = restaurants;
     }
+  
+    // Filter berdasarkan rating di sisi klien
     if (rating > 0) {
       filtered = filtered.filter((restaurant) => restaurant.rating >= rating);
     }
+  
     setFilteredRestaurants(filtered);
   };
+  
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => prevCount + 8);
   };
 
   return (
-    <div className="container mx-auto px-6 py-5">
-      <h1 className="text-4xl font-bold pb-2 text-gray-900">Restaurants</h1>
+    <div className="container mx-auto px-6 py-10">
+      <h1 className="text-4xl font-bold text-gray-900">Restaurants</h1>
+
+      {/* Filter Bar */}
       <FilterBar onFilter={handleFilter} />
+
+      {/* Grid Layout for Restaurants */}
       <h2 className="text-xl font-semibold text-gray-800 mt-8">All Restaurants</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
         {filteredRestaurants.map((restaurant) => (
           <RestaurantItem key={restaurant.id} restaurant={restaurant} />
         ))}
       </div>
-      {!filters.location && filters.rating === 0 && visibleCount < restaurants.length && (
+      {!filters.restaurantsName && filters.rating === 0 && visibleCount < restaurants.length && (
         <div className="flex justify-center mt-10">
           <button
             onClick={handleLoadMore}
