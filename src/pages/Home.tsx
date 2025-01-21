@@ -42,8 +42,8 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-10">
-      <h1 className="text-4xl font-bold text-gray-900">Restaurants</h1>
+    <div className="container mx-auto px-6 py-5">
+      <h1 className="text-4xl font-bold pb-2 text-gray-900">Restaurants</h1>
       <FilterBar onFilter={handleFilter} />
       <h2 className="text-xl font-semibold text-gray-800 mt-8">All Restaurants</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
